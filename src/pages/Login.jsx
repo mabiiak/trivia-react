@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import { handleToken } from '../redux/actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -10,6 +14,7 @@ export default class Login extends Component {
       name: '',
       email: '',
       buttDisabled: true,
+      redirectGame: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,8 +42,16 @@ export default class Login extends Component {
     }
   }
 
+  async handleLoginGame() {
+    const { handleUserToken } = this.props;
+    handleUserToken();
+    this.setState({
+      redirectGame: true,
+    });
+  }
+
   render() {
-    const { buttDisabled } = this.state;
+    const { buttDisabled, redirectGame } = this.state;
     return (
       <div>
         {/* input do nome */ }
@@ -61,12 +74,25 @@ export default class Login extends Component {
         />
         {/* botão Play */ }
         <Button
-          onClick={ () => console.log('oi') }
+          onClick={ () => this.handleLoginGame() }
           label="Play"
           dataTest="btn-play"
           buttDisabled={ buttDisabled }
         />
+        {
+          redirectGame && <Redirect to="/game" />
+        }
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  handleUserToken: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  handleUserToken: (token) => dispatch(handleToken(token)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
