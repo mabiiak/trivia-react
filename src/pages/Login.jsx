@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import Button from '../components/Button';
 import Input from '../components/Input';
 
@@ -10,6 +11,7 @@ export default class Login extends Component {
       name: '',
       email: '',
       buttDisabled: true,
+      redirect: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,7 +40,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const { buttDisabled } = this.state;
+    const { buttDisabled, redirect } = this.state;
     return (
       <div>
         {/* input do nome */ }
@@ -66,6 +68,15 @@ export default class Login extends Component {
           dataTest="btn-play"
           buttDisabled={ buttDisabled }
         />
+        {/* botão de configurações */}
+        <Button
+          onClick={ () => this.setState({ redirect: true }) }
+          label="Configurações"
+          dataTest="btn-settings"
+        />
+        {
+          redirect && <Redirect to="/settings" />
+        }
       </div>
     );
   }
