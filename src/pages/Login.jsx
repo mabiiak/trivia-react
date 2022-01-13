@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import Header from '../components/Header/Header';
 
 export default class Login extends Component {
   constructor() {
@@ -41,6 +42,7 @@ export default class Login extends Component {
     const { buttDisabled } = this.state;
     return (
       <div>
+        <Header />
         {/* input do nome */ }
         <Input
           type="text"
