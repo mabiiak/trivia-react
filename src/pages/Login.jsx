@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import Header from '../components/Header/Header';
+import Header from '../components/Header';
+import { setLogin } from '../redux/actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -24,6 +27,7 @@ export default class Login extends Component {
 
   validateButton() {
     const { email, name } = this.state;
+    const { nameUser } = this.props;
     const emailValid = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
     const nameLength = 1;
 
@@ -36,6 +40,8 @@ export default class Login extends Component {
         buttDisabled: true,
       });
     }
+
+    nameUser(name);
   }
 
   render() {
@@ -72,3 +78,13 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  nameUser: (state) => dispatch(setLogin(state)),
+});
+
+Login.propTypes = {
+  nameUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
