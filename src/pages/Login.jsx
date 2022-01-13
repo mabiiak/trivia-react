@@ -11,7 +11,7 @@ export default class Login extends Component {
       name: '',
       email: '',
       buttDisabled: true,
-      redirect: false,
+      redirectSettings: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,7 +40,7 @@ export default class Login extends Component {
   }
 
   render() {
-    const { buttDisabled, redirect } = this.state;
+    const { buttDisabled, redirectSettings } = this.state;
     return (
       <div>
         {/* input do nome */ }
@@ -70,7 +70,7 @@ export default class Login extends Component {
         />
         {/* botão de configurações */}
         <Button
-          onClick={ () => this.setState({ redirect: true }) }
+          onClick={ () => this.setState({ redirectSettings: true }) }
           label="Configurações"
           dataTest="btn-settings"
         />
