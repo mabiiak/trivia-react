@@ -75,7 +75,7 @@ export default class Login extends Component {
           dataTest="btn-settings"
         />
         {
-          redirect && <Redirect to="/settings" />
+          redirectSettings && <Redirect to="/settings" />
         }
       </div>
     );
