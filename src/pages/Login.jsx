@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Header from '../components/Header
 import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { handleToken } from '../redux/actions';
+import { handleToken, setLogin } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -29,6 +30,7 @@ class Login extends Component {
 
   validateButton() {
     const { email, name } = this.state;
+    const { nameUser } = this.props;
     const emailValid = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
     const nameLength = 1;
 
@@ -41,6 +43,8 @@ class Login extends Component {
         buttDisabled: true,
       });
     }
+
+    nameUser(name);
   }
 
   async handleLoginGame() {
@@ -55,6 +59,7 @@ class Login extends Component {
     const { buttDisabled, redirectSettings, redirectGame } = this.state;
     return (
       <div>
+        <Header />
         {/* input do nome */ }
         <Input
           type="text"
@@ -98,10 +103,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  nameUser: PropTypes.func.isRequired,
   handleUserToken: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  nameUser: (state) => dispatch(setLogin(state)),
   handleUserToken: (token) => dispatch(handleToken(token)),
 });
 
