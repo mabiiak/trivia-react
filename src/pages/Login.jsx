@@ -14,6 +14,7 @@ class Login extends Component {
       name: '',
       email: '',
       buttDisabled: true,
+      redirectSettings: false,
       redirectGame: false,
     };
 
@@ -51,7 +52,7 @@ class Login extends Component {
   }
 
   render() {
-    const { buttDisabled, redirectGame } = this.state;
+    const { buttDisabled, redirectSettings, redirectGame } = this.state;
     return (
       <div>
         {/* input do nome */ }
@@ -79,6 +80,15 @@ class Login extends Component {
           dataTest="btn-play"
           buttDisabled={ buttDisabled }
         />
+        {/* botão de configurações */}
+        <Button
+          onClick={ () => this.setState({ redirectSettings: true }) }
+          label="Configurações"
+          dataTest="btn-settings"
+        />
+        {
+          redirectSettings && <Redirect to="/settings" />
+        }
         {
           redirectGame && <Redirect to="/game" />
         }
