@@ -10,6 +10,11 @@ const INITIAL_STATE = {
 function player(state = INITIAL_STATE, action) {
   switch (action.type) {
   case SET_LOGIN:
+    return {
+      ...state,
+      name: action.name,
+      gravatarEmail: action.email,
+    };
   default:
     return state;
   }
