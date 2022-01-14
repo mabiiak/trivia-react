@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
+import { handleQuestions } from '../redux/actions';
 
 class Game extends React.Component {
   constructor() {
@@ -15,18 +16,23 @@ class Game extends React.Component {
     
     this.renderAnswers = this.renderAnswers.bind(this);
     this.onClickAnswer = this.onClickAnswer.bind(this);
+    this.handleAnswers = this.handleAnswers.bind(this);
   }
 
+ handleAnswers() {
+  const { questions } = this.state;
+  console.log(questions);
+  this.setState({
+    answersList: [
+      questions[0].correct_answer,
+      ...questions[0].incorrect_answers],
+    loaded: true,
+  })
+ }
+
   componentDidMount() {
-    const { returnQuestions } = this.props;
-    this.setState({ questions: returnQuestions }, () => {
-      this.setState({
-        answersList: [
-          returnQuestions[0].correct_answer,
-          ...returnQuestions[0].incorrect_answers],
-        loaded: true,
-      })
-    });
+    const { handleQuestions } = this.props;
+    handleQuestions();
   }
 
   onClickAnswer() {
@@ -34,9 +40,8 @@ class Game extends React.Component {
   }
 
   renderAnswers() {
-    const { returnQuestions } = this.props;
-    const { state: { answersList }, onClickAnswer } = this;
-    const incorrectAnswers = returnQuestions[0].incorrect_answers;
+    const { state: { answersList, questions }, onClickAnswer } = this;
+    const incorrectAnswers = questions[0].incorrect_answers;
     const shuffledList = answersList.sort(() => Math.random() - 0.5)
 
     return (
@@ -59,8 +64,6 @@ class Game extends React.Component {
   }
 
   render() {
-    const { returnQuestions } = this.props;
-    console.log(returnQuestions);
     const { state: { loaded, questions }, renderAnswers } = this;
     return (
       <div>
@@ -70,7 +73,7 @@ class Game extends React.Component {
             { loaded && `Categoria - ${questions[0].category}` }
           </div>
           <div data-testid="question-text">
-          { loaded && questions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") }
+            { loaded && questions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") }
           </div>
         </section>
         <section data-testid="answer-options">
@@ -81,8 +84,8 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  returnQuestions: state.questions.questionList,
-});
+const mapDispatchToProps = (dispatch) => ({
+  handleQuestions: (state) => dispatch(handleQuestions(state))
+})
 
-export default connect(mapStateToProps)(Game);
+export default connect(null, mapDispatchToProps)(Game);
