@@ -18,12 +18,13 @@ class Game extends React.Component {
 
   componentDidMount() {
     const { returnQuestions } = this.props;
-    this.setState({
-      questions: returnQuestions,
-      answersList: [
-        returnQuestions[0].correct_answer,
-        ...returnQuestions[0].incorrect_answers],
-      loaded: true,
+    this.setState({ questions: returnQuestions }, () => {
+      this.setState({
+        answersList: [
+          returnQuestions[0].correct_answer,
+          ...returnQuestions[0].incorrect_answers],
+        loaded: true,
+      })
     });
   }
 
@@ -32,8 +33,9 @@ class Game extends React.Component {
   }
 
   renderAnswers() {
-    const { state: { answersList, questions }, onClickAnswer } = this;
-    const incorrectAnswers = questions[0].incorrect_answers;
+    const { returnQuestions } = this.props;
+    const { state: { answersList }, onClickAnswer } = this;
+    const incorrectAnswers = returnQuestions[0].incorrect_answers;
     const shuffledList = answersList.sort(() => Math.random() - 0.5)
 
     return (
@@ -58,19 +60,19 @@ class Game extends React.Component {
   render() {
     const { returnQuestions } = this.props;
     console.log(returnQuestions);
-    const { state: { loaded }, renderAnswers } = this;
+    const { state: { loaded, questions }, renderAnswers } = this;
     return (
       <div>
         <section>
           <div data-testid="question-category">
-            { `Categoria - ${returnQuestions[0].category}` }
+            { loaded && `Categoria - ${questions[0].category}` }
           </div>
           <div data-testid="question-text">
-          { returnQuestions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") }
+          { loaded && questions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") }
           </div>
         </section>
         <section data-testid="answer-options">
-          { loaded ? renderAnswers() : `Resposta 1`}
+          { loaded && renderAnswers() }
         </section>
       </div>
     );
@@ -78,7 +80,7 @@ class Game extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  returnQuestions: state.questions,
+  returnQuestions: state.questions.questionList,
 });
 
 export default connect(mapStateToProps)(Game);
