@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   name: '',
   assertions: '',
   score: 0,
-  gravatarEmail: '',
+  email: '',
 };
 
 function player(state = INITIAL_STATE, action) {
@@ -13,7 +13,7 @@ function player(state = INITIAL_STATE, action) {
     return {
       ...state,
       name: action.name,
-      gravatarEmail: action.email,
+      email: action.email,
     };
   default:
     return state;
