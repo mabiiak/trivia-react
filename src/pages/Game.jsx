@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../components/Header';
 import Button from '../components/Button';
 import { connect } from 'react-redux';
 
@@ -6,14 +7,14 @@ class Game extends React.Component {
   constructor() {
     super();
 
-    this.renderAnswers = this.renderAnswers.bind(this);
-    this.onClickAnswer = this.onClickAnswer.bind(this);
-    
     this.state = {
       questions: [],
       loaded: false,
       answersList: [],
     }
+    
+    this.renderAnswers = this.renderAnswers.bind(this);
+    this.onClickAnswer = this.onClickAnswer.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +64,7 @@ class Game extends React.Component {
     const { state: { loaded, questions }, renderAnswers } = this;
     return (
       <div>
+        <Header />
         <section>
           <div data-testid="question-category">
             { loaded && `Categoria - ${questions[0].category}` }

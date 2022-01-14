@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
 import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -30,7 +29,6 @@ class Login extends Component {
 
   validateButton() {
     const { email, name } = this.state;
-    const { nameUser } = this.props;
     const emailValid = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
     const nameLength = 1;
 
@@ -43,25 +41,23 @@ class Login extends Component {
         buttDisabled: true,
       });
     }
-
-    nameUser(name);
   }
 
   async handleLoginGame() {
-    const { handleUserToken, handleGameQuestions } = this.props;
+    const { handleUserToken, nameUser, handleGameQuestions } = this.props;
     handleUserToken();
+    nameUser(this.state);
     handleGameQuestions().then(() => {
       this.setState({
         redirectGame: true,
       });
-    });
+    }
   }
 
   render() {
     const { buttDisabled, redirectSettings, redirectGame } = this.state;
     return (
       <div>
-        <Header />
         {/* input do nome */ }
         <Input
           type="text"

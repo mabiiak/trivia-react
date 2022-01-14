@@ -4,10 +4,10 @@ export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 
-export const setLogin = (name, email) => ({
+export const setLogin = (payload) => ({
   type: SET_LOGIN,
-  name,
-  email,
+  name: payload.name,
+  email: payload.email,
 });
 
 const setToken = (token) => ({
