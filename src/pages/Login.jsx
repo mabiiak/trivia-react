@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from '../components/Header
+import Header from '../components/Header';
 import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { handleToken, setLogin } from '../redux/actions';
+import { handleToken, setLogin, handleQuestions } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -48,10 +48,12 @@ class Login extends Component {
   }
 
   async handleLoginGame() {
-    const { handleUserToken } = this.props;
+    const { handleUserToken, handleGameQuestions } = this.props;
     handleUserToken();
-    this.setState({
-      redirectGame: true,
+    handleGameQuestions().then(() => {
+      this.setState({
+        redirectGame: true,
+      });
     });
   }
 
@@ -90,6 +92,7 @@ class Login extends Component {
           onClick={ () => this.setState({ redirectSettings: true }) }
           label="Configurações"
           dataTest="btn-settings"
+          buttDisabled={ false }
         />
         {
           redirectSettings && <Redirect to="/settings" />
@@ -105,11 +108,13 @@ class Login extends Component {
 Login.propTypes = {
   nameUser: PropTypes.func.isRequired,
   handleUserToken: PropTypes.func.isRequired,
+  handleGameQuestions: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   nameUser: (state) => dispatch(setLogin(state)),
   handleUserToken: (token) => dispatch(handleToken(token)),
+  handleGameQuestions: (payload) => dispatch(handleQuestions(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

@@ -1,5 +1,6 @@
 export const SET_LOGIN = 'SET_LOGIN';
 export const SET_TOKEN = 'SET_TOKEN';
+export const SET_QUESTIONS = 'SET_QUESTIONS';
 
 export const setLogin = (name, email) => ({
   type: SET_LOGIN,
@@ -19,4 +20,18 @@ export function handleToken() {
     dispatch(setToken(token.token));
     localStorage.setItem('token', token.token);
   };
+}
+
+const setQuestions = (payload) => ({
+  type: SET_QUESTIONS,
+  payload,
+});
+
+export function handleQuestions() {
+  return async (dispatch) => {
+    const userToken = localStorage.getItem('token');
+    const request = await fetch(`https://opentdb.com/api.php?amount=5&token=${userToken}`);
+    const requestJSON = await request.json();
+    dispatch(setQuestions(requestJSON.results));
+  }
 }
