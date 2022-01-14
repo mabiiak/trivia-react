@@ -1,10 +1,10 @@
 export const SET_LOGIN = 'SET_LOGIN';
 export const SET_TOKEN = 'SET_TOKEN';
 
-export const setLogin = (name, email) => ({
+export const setLogin = (payload) => ({
   type: SET_LOGIN,
-  name,
-  email,
+  name: payload.name,
+  email: payload.email,
 });
 
 const setToken = (token) => ({

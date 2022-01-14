@@ -29,7 +29,6 @@ class Login extends Component {
 
   validateButton() {
     const { email, name } = this.state;
-    const { nameUser } = this.props;
     const emailValid = /^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/;
     const nameLength = 1;
 
@@ -42,13 +41,12 @@ class Login extends Component {
         buttDisabled: true,
       });
     }
-
-    nameUser(name);
   }
 
   async handleLoginGame() {
-    const { handleUserToken } = this.props;
+    const { handleUserToken, nameUser } = this.props;
     handleUserToken();
+    nameUser(this.state);
     this.setState({
       redirectGame: true,
     });
