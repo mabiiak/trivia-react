@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from '../components/Header
 import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -59,7 +58,6 @@ class Login extends Component {
     const { buttDisabled, redirectSettings, redirectGame } = this.state;
     return (
       <div>
-        <Header />
         {/* input do nome */ }
         <Input
           type="text"
