@@ -58,15 +58,15 @@ class Game extends React.Component {
   render() {
     const { returnQuestions } = this.props;
     console.log(returnQuestions);
-    const { state: { questions, loaded }, renderAnswers } = this;
+    const { state: { loaded }, renderAnswers } = this;
     return (
       <div>
         <section>
           <div data-testid="question-category">
-            { loaded ? `Categoria - ${questions[0].category}` : `Categoria -` }
+            { `Categoria - ${returnQuestions[0].category}` }
           </div>
           <div data-testid="question-text">
-          { loaded ? questions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") : `Pergunta -` }
+          { returnQuestions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") }
           </div>
         </section>
         <section data-testid="answer-options">
