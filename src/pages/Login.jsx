@@ -51,7 +51,7 @@ class Login extends Component {
       this.setState({
         redirectGame: true,
       });
-    }
+    });
   }
 
   render() {
