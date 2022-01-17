@@ -1,31 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropType from 'prop-types';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import { connect } from 'react-redux';
+import { handleQuestions } from '../redux/actions';
 
 class Game extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      questions: [],
-      loaded: false,
       answersList: [],
-    }
-    
+    };
+
     this.renderAnswers = this.renderAnswers.bind(this);
     this.onClickAnswer = this.onClickAnswer.bind(this);
+    this.handleAnswers = this.handleAnswers.bind(this);
   }
 
   componentDidMount() {
-    const { returnQuestions } = this.props;
-    this.setState({ questions: returnQuestions }, () => {
-      this.setState({
-        answersList: [
-          returnQuestions[0].correct_answer,
-          ...returnQuestions[0].incorrect_answers],
-        loaded: true,
-      })
+    const { handleQuestionsRedux } = this.props;
+    handleQuestionsRedux().then(() => {
+      const { questionList } = this.props;
+      this.handleAnswers(questionList);
     });
   }
 
@@ -33,15 +30,23 @@ class Game extends React.Component {
     console.log('clickou');
   }
 
+  handleAnswers(questionList) {
+    this.setState({
+      answersList: [questionList[0].correct_answer, ...questionList[0].incorrect_answers],
+    });
+  }
+
   renderAnswers() {
-    const { returnQuestions } = this.props;
-    const { state: { answersList }, onClickAnswer } = this;
-    const incorrectAnswers = returnQuestions[0].incorrect_answers;
-    const shuffledList = answersList.sort(() => Math.random() - 0.5)
+    const { questionList } = this.props;
+    const { answersList } = this.state;
+    const { onClickAnswer } = this;
+    const incorrectAnswers = questionList[0].incorrect_answers;
+    const RANDOM_INTERVAL = 0.5;
+    const shuffledList = answersList.sort(() => Math.random() - RANDOM_INTERVAL);
 
     return (
       shuffledList.map((answer, index) => {
-        let testId = `correct-answer`
+        let testId = 'correct-answer';
         if (incorrectAnswers.some((options) => answer === options)) {
           testId = `wrong-answer-${index}`;
         }
@@ -53,28 +58,27 @@ class Game extends React.Component {
             onClick={ onClickAnswer }
             dataTest={ testId }
           />
-        )
+        );
       })
     );
   }
 
   render() {
-    const { returnQuestions } = this.props;
-    console.log(returnQuestions);
-    const { state: { loaded, questions }, renderAnswers } = this;
+    const { questionList } = this.props;
+    const { renderAnswers } = this;
     return (
       <div>
         <Header />
         <section>
           <div data-testid="question-category">
-            { loaded && `Categoria - ${questions[0].category}` }
+            { questionList.length > 0 && `Categoria - ${questionList[0].category} ` }
           </div>
           <div data-testid="question-text">
-          { loaded && questions[0].question.replace(/&quot;/gi, '"').replace(/&#039;/gi, "'") }
+            { questionList.length > 0 && questionList[0].question }
           </div>
         </section>
         <section data-testid="answer-options">
-          { loaded && renderAnswers() }
+          { questionList.length > 0 && renderAnswers() }
         </section>
       </div>
     );
@@ -82,7 +86,18 @@ class Game extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  returnQuestions: state.questions.questionList,
+  questionList: state.questions.questionList,
+  isFetching: state.questions.isFetching,
+  token: state.token,
 });
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  handleQuestionsRedux: () => dispatch(handleQuestions()),
+});
+
+Game.propTypes = {
+  handleQuestionsRedux: PropType.func.isRequired,
+  questionList: PropType.arrayOf(PropType.object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

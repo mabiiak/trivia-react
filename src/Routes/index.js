@@ -4,7 +4,6 @@ import Game from '../pages/Game';
 import Login from '../pages/Login';
 import Settings from '../pages/Settings';
 
-
 class Routes extends React.Component {
   render() {
     return (
