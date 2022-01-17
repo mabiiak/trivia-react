@@ -21,7 +21,7 @@ export function handleToken() {
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const token = await response.json();
     const INVALID_CODE = 3;
-    if (token.response_code === INVALID_CODE || token.token === "") {
+    if (token.response_code === INVALID_CODE || token.token === '') {
       dispatch(handleToken());
     } else {
       dispatch(setToken(token.token));
@@ -44,13 +44,19 @@ export function handleQuestions() {
     dispatch(requestQuestions());
     const userToken = getState();
     console.log(userToken);
-    if (userToken.token === "") {
+    if (userToken.token === '') {
       console.log('oi');
-      dispatch(handleToken());
+      await dispatch(handleToken());
     }
-    console.log(getState());
-    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${userToken}`);
+    const newToken = getState().token;
+    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${newToken}`);
     const responseJson = await response.json();
-    dispatch(setQuestions(responseJson.results));
+    const INVALID_CODE = 3;
+    if (responseJson.response_code === INVALID_CODE) {
+      await dispatch(handleToken());
+      dispatch(handleQuestions());
+    } else {
+      dispatch(setQuestions(responseJson.results));
+    }
   };
 }
