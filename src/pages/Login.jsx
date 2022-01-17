@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import { handleToken, setLogin, handleQuestions } from '../redux/actions';
+import { handleToken, setLogin } from '../redux/actions';
 
 class Login extends Component {
   constructor() {
@@ -44,14 +44,13 @@ class Login extends Component {
   }
 
   async handleLoginGame() {
-    const { handleUserToken, nameUser, handleGameQuestions } = this.props;
-    handleUserToken();
-    nameUser(this.state);
-    handleGameQuestions().then(() => {
+    const { handleUserToken, nameUser } = this.props;
+    handleUserToken().then(() => {
+      nameUser(this.state);
       this.setState({
         redirectGame: true,
       });
-    }
+    });
   }
 
   render() {
@@ -104,13 +103,11 @@ class Login extends Component {
 Login.propTypes = {
   nameUser: PropTypes.func.isRequired,
   handleUserToken: PropTypes.func.isRequired,
-  handleGameQuestions: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   nameUser: (state) => dispatch(setLogin(state)),
   handleUserToken: (token) => dispatch(handleToken(token)),
-  handleGameQuestions: (payload) => dispatch(handleQuestions(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
