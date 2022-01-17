@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 .notClicked {
   margin: 3px;
   padding: 5px;
@@ -10,15 +11,15 @@
 .correctAnswer:disabled {
   background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
-  color: rgb(0, 0, 0);
+  color: black;
   margin: 3px;
   padding: 5px;
 }
 
 .wrongAnswer:disabled {
-  background-color: rgb(255, 0, 0);
-  border: 3px solid rgb(255, 0, 0);
-  color: rgb(255, 255, 255);
+  background-color: red;
+  border: 3px solid red;
+  color: white;
   margin: 3px;
   padding: 5px;
 }
