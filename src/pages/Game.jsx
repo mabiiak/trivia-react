@@ -46,7 +46,7 @@ class Game extends React.Component {
 
     return (
       shuffledList.map((answer, index) => {
-        let testId = `correct-answer`
+        let testId = 'correct-answer';
         if (incorrectAnswers.some((options) => answer === options)) {
           testId = `wrong-answer-${index}`;
         }

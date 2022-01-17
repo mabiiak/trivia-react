@@ -1,5 +1,3 @@
-import store from "../store";
-
 export const SET_LOGIN = 'SET_LOGIN';
 export const SET_TOKEN = 'SET_TOKEN';
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
@@ -19,10 +17,16 @@ const setToken = (token) => ({
 
 export function handleToken() {
   return async (dispatch) => {
+    console.log('teste');
     const response = await fetch('https://opentdb.com/api_token.php?command=request');
     const token = await response.json();
-    dispatch(setToken(token.token));
-    localStorage.setItem('token', token.token);
+    const INVALID_CODE = 3;
+    if (token.response_code === INVALID_CODE || token.token === "") {
+      dispatch(handleToken());
+    } else {
+      dispatch(setToken(token.token));
+      localStorage.setItem('token', token.token);
+    }
   };
 }
 
@@ -33,21 +37,20 @@ const requestQuestions = () => ({
 const setQuestions = (json) => ({
   type: SET_QUESTIONS,
   payload: json,
-})
+});
 
 export function handleQuestions() {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(requestQuestions());
-    //const userToken = localStorage.getItem('token');
-    const userToken = store.getState();
+    const userToken = getState();
     console.log(userToken);
+    if (userToken.token === "") {
+      console.log('oi');
+      dispatch(handleToken());
+    }
+    console.log(getState());
     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${userToken}`);
     const responseJson = await response.json();
-    if(responseJson.response_code === 3) {
-      handleToken();
-      handleQuestions();
-    }else {
-      dispatch(setQuestions(responseJson.results));
-    }
-  }
+    dispatch(setQuestions(responseJson.results));
+  };
 }

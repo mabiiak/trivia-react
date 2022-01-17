@@ -45,10 +45,11 @@ class Login extends Component {
 
   async handleLoginGame() {
     const { handleUserToken, nameUser } = this.props;
-    handleUserToken();
-    nameUser(this.state);
-    this.setState({
-      redirectGame: true,
+    handleUserToken().then(() => {
+      nameUser(this.state);
+      this.setState({
+        redirectGame: true,
+      });
     });
   }
 
