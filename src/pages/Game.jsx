@@ -44,7 +44,7 @@ class Game extends React.Component {
 
   onClickAnswer(e) {
     const { value } = e.target;
-    this.setState({ buttonDisabled: true, display: 'notClicked' });
+    this.setState({ buttonDisabled: true, display: 'notClicked', currentTime: 30 });
     this.sumPoints(value);
   }
 
@@ -63,7 +63,8 @@ class Game extends React.Component {
       if (diff === 'medium') currentDificulty = DOIS;
       if (diff === 'hard') currentDificulty = TRES;
 
-      this.setState({ score: ACERTO + (currentTime * currentDificulty) }, () => {
+      this.setState((prevState) => ({
+        score: prevState.score + ACERTO + (currentTime * currentDificulty) }), () => {
         const { score } = this.state;
         const { setScoreRedux } = this.props;
         localStorage.setItem('ranking', JSON.stringify({ score }));
@@ -85,11 +86,17 @@ class Game extends React.Component {
   }
 
   handleNext() {
+    const { history } = this.props;
     const ADD_TO_INDEX = 1;
     const MAX_INDEX = 4;
     const { questionIndex } = this.state;
     if (questionIndex < MAX_INDEX) {
-      this.setState({ questionIndex: questionIndex + ADD_TO_INDEX });
+      this.setState({ questionIndex: questionIndex + ADD_TO_INDEX }, () => {
+        this.setState({ buttonDisabled: false, display: 'nextButtonNotShown' });
+      });
+    } else {
+      console.log('uarheurhaeuihruia');
+      history.push('/feedback');
     }
   }
 
@@ -195,6 +202,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Game.propTypes = {
+  history: PropType.arrayOf(PropType.func).isRequired,
   handleQuestionsRedux: PropType.func.isRequired,
   questionList: PropType.arrayOf(PropType.object).isRequired,
   setScoreRedux: PropType.func.isRequired,
