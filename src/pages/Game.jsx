@@ -44,7 +44,7 @@ class Game extends React.Component {
 
   onClickAnswer(e) {
     const { value } = e.target;
-    this.setState({ buttonDisabled: true });
+    this.setState({ buttonDisabled: true, display: 'notClicked' });
     this.sumPoints(value);
   }
 
@@ -52,7 +52,6 @@ class Game extends React.Component {
     const { questionList, questionIndex, currentTime } = this.state;
     const diff = (questionList[questionIndex]);
     const correct = questionList[questionIndex].correct_answer;
-    // const { setScoreRedux } = this.props;
 
     const ACERTO = 10;
     const DOIS = 2;
