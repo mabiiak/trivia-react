@@ -12,6 +12,7 @@ export default class Button extends Component {
         onClick={ onClick }
         data-testid={ dataTest }
         disabled={ buttDisabled }
+        value={ label }
       >
         { label }
       </button>

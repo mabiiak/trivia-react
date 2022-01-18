@@ -25,11 +25,8 @@ class Header extends React.Component {
     this.setState({ hash: returnHash });
   }
 
-  // d41d8cd98f00b204e9800998ecf8427e
-  // d41d8cd98f00b204e9800998ecf8427e
-
   render() {
-    const { state: { hash }, props: { returnName } } = this;
+    const { state: { hash }, props: { returnName, returnScore } } = this;
 
     return (
       <header className="header">
@@ -41,7 +38,7 @@ class Header extends React.Component {
         <p data-testid="header-player-name">
           { returnName }
         </p>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{ returnScore }</p>
       </header>
     );
   }
@@ -50,11 +47,13 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   returnName: state.player.name,
   returnEmail: state.player.email,
+  returnScore: state.player.score,
 });
 
 Header.propTypes = {
   returnName: PropTypes.string.isRequired,
   returnEmail: PropTypes.string.isRequired,
+  returnScore: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

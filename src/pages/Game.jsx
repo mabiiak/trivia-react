@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropType from 'prop-types';
 import Header from '../components/Header';
 import Button from '../components/Button';
-import { handleQuestions } from '../redux/actions';
+import { handleQuestions, setScore } from '../redux/actions';
 import Timer from '../components/Timer';
 
 class Game extends React.Component {
@@ -17,11 +17,13 @@ class Game extends React.Component {
       questionIndex: 0,
       currentTime: 30,
       display: 'nextButtonNotShown',
+      score: 0,
     };
 
     this.renderAnswers = this.renderAnswers.bind(this);
     this.onClickAnswer = this.onClickAnswer.bind(this);
     this.handleAnswers = this.handleAnswers.bind(this);
+    this.sumPoints = this.sumPoints.bind(this);
     this.handleNext = this.handleNext.bind(this);
   }
 
@@ -40,11 +42,35 @@ class Game extends React.Component {
     );
   }
 
-  onClickAnswer() {
-    this.setState({
-      buttonDisabled: true,
-      display: 'notClicked',
-    });
+  onClickAnswer(e) {
+    const { value } = e.target;
+    this.setState({ buttonDisabled: true });
+    this.sumPoints(value);
+  }
+
+  sumPoints(value) {
+    const { questionList, questionIndex, currentTime } = this.state;
+    const diff = (questionList[questionIndex]);
+    const correct = questionList[questionIndex].correct_answer;
+    // const { setScoreRedux } = this.props;
+
+    const ACERTO = 10;
+    const DOIS = 2;
+    const TRES = 3;
+
+    let currentDificulty = 1;
+
+    if (value === correct) {
+      if (diff === 'medium') currentDificulty = DOIS;
+      if (diff === 'hard') currentDificulty = TRES;
+
+      this.setState({ score: ACERTO + (currentTime * currentDificulty) }, () => {
+        const { score } = this.state;
+        const { setScoreRedux } = this.props;
+        localStorage.setItem('ranking', JSON.stringify({ score }));
+        setScoreRedux(this.state);
+      });
+    }
   }
 
   handleAnswers() {
@@ -166,11 +192,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleQuestionsRedux: () => dispatch(handleQuestions()),
+  setScoreRedux: (state) => dispatch(setScore(state)),
 });
 
 Game.propTypes = {
   handleQuestionsRedux: PropType.func.isRequired,
   questionList: PropType.arrayOf(PropType.object).isRequired,
+  setScoreRedux: PropType.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
