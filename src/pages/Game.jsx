@@ -12,6 +12,7 @@ class Game extends React.Component {
     this.state = {
       answersList: [],
       buttonDisabled: false,
+      questionList: [],
       questionIndex: 0,
     };
 
@@ -25,7 +26,9 @@ class Game extends React.Component {
     const { handleQuestionsRedux } = this.props;
     handleQuestionsRedux().then(() => {
       const { questionList } = this.props;
-      this.handleAnswers(questionList);
+      this.setState({ questionList }, () => {
+        this.handleAnswers(questionList);
+      });
     });
   }
 
@@ -33,19 +36,16 @@ class Game extends React.Component {
     this.setState({ buttonDisabled: true });
   }
 
-  handleAnswers(questionList) {
-    const { questionIndex } = this.state;
-    const orderList = [
-      questionList[questionIndex].correct_answer,
-      ...questionList[questionIndex].incorrect_answers,
-    ];
-    const RANDOM_INTERVAL = 0.5;
-    const shuffledList = orderList.sort(() => Math.random() - RANDOM_INTERVAL);
-    this.setState({
-      answersList: shuffledList,
-    }, () => {
-
+  handleAnswers() {
+    const { questionList } = this.state;
+    const arrayOfAnswers = [];
+    questionList.forEach((question) => {
+      const orderList = [question.correct_answer, ...question.incorrect_answers];
+      const RANDOM_INTERVAL = 0.5;
+      const shuffledList = orderList.sort(() => Math.random() - RANDOM_INTERVAL);
+      arrayOfAnswers.push(shuffledList);
     });
+    this.setState({ answersList: arrayOfAnswers });
   }
 
   handleNext() {
@@ -61,33 +61,34 @@ class Game extends React.Component {
     const { questionList } = this.props;
     const { answersList, buttonDisabled } = this.state;
     const { onClickAnswer } = this;
-    const incorrectAnswers = questionList[questionIndex].incorrect_answers;
-
-    return (
-      answersList.map((answer, index) => {
-        let className = 'notClicked';
-        if (buttonDisabled === true) {
-          className = 'correctAnswer';
-          if (incorrectAnswers.some((options) => answer === options)) {
-            className = 'wrongAnswer';
+    if (answersList.length > 0) {
+      const incorrectAnswers = questionList[questionIndex].incorrect_answers;
+      return (
+        answersList[questionIndex].map((answer, index) => {
+          let className = 'notClicked';
+          if (buttonDisabled === true) {
+            className = 'correctAnswer';
+            if (incorrectAnswers.some((options) => answer === options)) {
+              className = 'wrongAnswer';
+            }
           }
-        }
-        let testId = 'correct-answer';
-        if (incorrectAnswers.some((options) => answer === options)) {
-          testId = `wrong-answer-${index}`;
-        }
-        return (
-          <Button
-            className={ className }
-            label={ answer }
-            buttDisabled={ buttonDisabled }
-            key={ index }
-            onClick={ onClickAnswer }
-            dataTest={ testId }
-          />
-        );
-      })
-    );
+          let testId = 'correct-answer';
+          if (incorrectAnswers.some((options) => answer === options)) {
+            testId = `wrong-answer-${index}`;
+          }
+          return (
+            <Button
+              className={ className }
+              label={ answer }
+              buttDisabled={ buttonDisabled }
+              key={ index }
+              onClick={ onClickAnswer }
+              dataTest={ testId }
+            />
+          );
+        })
+      );
+    }
   }
 
   render() {
@@ -115,8 +116,11 @@ class Game extends React.Component {
           { questionList.length > 0 && renderAnswers(questionIndex) }
           <div>
             <Button
+              className="notClicked"
+              buttDisabled={ false }
               label="Next"
               onClick={ handleNext }
+              dataTest="btn-next"
             />
           </div>
         </section>
