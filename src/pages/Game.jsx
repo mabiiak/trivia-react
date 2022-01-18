@@ -16,6 +16,7 @@ class Game extends React.Component {
       questionList: [],
       questionIndex: 0,
       currentTime: 30,
+      display: 'nextButtonNotShown',
     };
 
     this.renderAnswers = this.renderAnswers.bind(this);
@@ -40,7 +41,10 @@ class Game extends React.Component {
   }
 
   onClickAnswer() {
-    this.setState({ buttonDisabled: true });
+    this.setState({
+      buttonDisabled: true,
+      display: 'notClicked',
+    });
   }
 
   handleAnswers() {
@@ -63,10 +67,11 @@ class Game extends React.Component {
       this.setState({ questionIndex: questionIndex + ADD_TO_INDEX });
     }
   }
+
   tick() {
     const ONE = 1;
-    const { currentTime } = this.state;
-    if (currentTime > 0) {
+    const { currentTime, buttonDisabled } = this.state;
+    if (currentTime > 0 && buttonDisabled === false) {
       this.setState((prevState) => ({
         currentTime: prevState.currentTime - ONE,
       }));
@@ -74,13 +79,14 @@ class Game extends React.Component {
     if (currentTime === 0) {
       this.setState({
         buttonDisabled: true,
+        display: 'notClicked',
       });
     }
   }
 
   renderAnswers() {
     const { questionList } = this.props;
-    const { answersList, buttonDisabled } = this.state;
+    const { answersList, buttonDisabled, questionIndex } = this.state;
     const { onClickAnswer } = this;
     if (answersList.length > 0) {
       const incorrectAnswers = questionList[questionIndex].incorrect_answers;
@@ -113,7 +119,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const { currentTime } = this.state;
+    const { currentTime, display } = this.state;
     const { questionList } = this.props;
     const {
       state: {
@@ -136,17 +142,17 @@ class Game extends React.Component {
         </section>
         <section data-testid="answer-options">
           { questionList.length > 0 && renderAnswers(questionIndex) }
-          <div>
-            <Button
-              className="notClicked"
-              buttDisabled={ false }
-              label="Next"
-              onClick={ handleNext }
-              dataTest="btn-next"
-            />
-          </div>
         </section>
         <Timer currentTime={ currentTime } />
+        <div>
+          <Button
+            className={ display }
+            buttDisabled={ false }
+            label="Next"
+            onClick={ handleNext }
+            dataTest="btn-next"
+          />
+        </div>
       </div>
     );
   }
