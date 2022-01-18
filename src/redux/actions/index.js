@@ -3,11 +3,17 @@ export const SET_TOKEN = 'SET_TOKEN';
 export const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
 export const SET_QUESTIONS = 'SET_QUESTIONS';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const SET_SCORE = 'SET_SCORE';
 
 export const setLogin = (payload) => ({
   type: SET_LOGIN,
   name: payload.name,
   email: payload.email,
+});
+
+export const setScore = (payload) => ({
+  type: SET_SCORE,
+  score: payload.score,
 });
 
 const setToken = (token) => ({

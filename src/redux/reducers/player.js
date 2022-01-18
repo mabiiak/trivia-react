@@ -1,4 +1,4 @@
-import { SET_LOGIN } from '../actions';
+import { SET_LOGIN, SET_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,6 +14,11 @@ function player(state = INITIAL_STATE, action) {
       ...state,
       name: action.name,
       email: action.email,
+    };
+  case SET_SCORE:
+    return {
+      ...state,
+      score: action.score,
     };
   default:
     return state;
