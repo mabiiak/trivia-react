@@ -19,6 +19,7 @@ class Game extends React.Component {
     this.renderAnswers = this.renderAnswers.bind(this);
     this.onClickAnswer = this.onClickAnswer.bind(this);
     this.handleAnswers = this.handleAnswers.bind(this);
+    this.sumPoints = this.sumPoints.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +37,12 @@ class Game extends React.Component {
 
   onClickAnswer() {
     this.setState({ buttonDisabled: true });
+    this.sumPoints();
+  }
+
+  sumPoints() {
+    const { questionList } = this.props;
+    console.log(questionList);
   }
 
   handleAnswers(questionList) {
