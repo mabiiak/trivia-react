@@ -4,6 +4,7 @@ import PropType from 'prop-types';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import { handleQuestions } from '../redux/actions';
+import Timer from '../components/Timer';
 
 class Game extends React.Component {
   constructor() {
@@ -14,6 +15,7 @@ class Game extends React.Component {
       buttonDisabled: false,
       questionList: [],
       questionIndex: 0,
+      currentTime: 30,
     };
 
     this.renderAnswers = this.renderAnswers.bind(this);
@@ -23,6 +25,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
+    const MIL = 1000;
     const { handleQuestionsRedux } = this.props;
     handleQuestionsRedux().then(() => {
       const { questionList } = this.props;
@@ -30,6 +33,10 @@ class Game extends React.Component {
         this.handleAnswers(questionList);
       });
     });
+    this.timerID = setInterval(
+      () => this.tick(),
+      MIL,
+    );
   }
 
   onClickAnswer() {
@@ -56,8 +63,22 @@ class Game extends React.Component {
       this.setState({ questionIndex: questionIndex + ADD_TO_INDEX });
     }
   }
+  tick() {
+    const ONE = 1;
+    const { currentTime } = this.state;
+    if (currentTime > 0) {
+      this.setState((prevState) => ({
+        currentTime: prevState.currentTime - ONE,
+      }));
+    }
+    if (currentTime === 0) {
+      this.setState({
+        buttonDisabled: true,
+      });
+    }
+  }
 
-  renderAnswers(questionIndex) {
+  renderAnswers() {
     const { questionList } = this.props;
     const { answersList, buttonDisabled } = this.state;
     const { onClickAnswer } = this;
@@ -92,6 +113,7 @@ class Game extends React.Component {
   }
 
   render() {
+    const { currentTime } = this.state;
     const { questionList } = this.props;
     const {
       state: {
@@ -124,6 +146,7 @@ class Game extends React.Component {
             />
           </div>
         </section>
+        <Timer currentTime={ currentTime } />
       </div>
     );
   }
