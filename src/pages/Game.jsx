@@ -63,7 +63,8 @@ class Game extends React.Component {
       if (diff === 'medium') currentDificulty = DOIS;
       if (diff === 'hard') currentDificulty = TRES;
 
-      this.setState({ score: ACERTO + (currentTime * currentDificulty) }, () => {
+      this.setState((prevState) => ({
+        score: prevState.score + ACERTO + (currentTime * currentDificulty) }), () => {
         const { score } = this.state;
         const { setScoreRedux } = this.props;
         localStorage.setItem('ranking', JSON.stringify({ score }));
