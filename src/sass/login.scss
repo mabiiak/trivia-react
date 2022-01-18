@@ -1,0 +1,43 @@
+@import '../sass/variables.scss';
+
+.loginContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logoTitle {
+  text-shadow: 0 5px $primaryColor;
+  font-size: 6em;
+  height: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.innerForm {
+  background-color: $defaultColor;
+  height: 50%;
+  width: 20%;
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0.75em;
+}
+
+button {
+  height: 100px;
+  width: 20%;
+  margin: 0.5em;
+}

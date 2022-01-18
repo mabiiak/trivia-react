@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../sass/input.scss';
 
 export default class Input extends Component {
   render() {
     const { type, name, onChange, dataTest, id, placeholder } = this.props;
     return (
-      <form>
-        <label htmlFor={ id }>
-          <input
-            type={ type }
-            placeholder={ placeholder }
-            name={ name }
-            onChange={ onChange }
-            data-testid={ dataTest }
-            id={ id }
-          />
-        </label>
-      </form>
+      <input
+        autoComplete="off"
+        className="loginInput"
+        type={ type }
+        placeholder={ placeholder }
+        name={ name }
+        onChange={ onChange }
+        data-testid={ dataTest }
+        id={ id }
+      />
     );
   }
 }

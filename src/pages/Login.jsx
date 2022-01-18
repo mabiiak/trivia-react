@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import { handleToken, setLogin } from '../redux/actions';
+import '../sass/login.scss';
 
 class Login extends Component {
   constructor() {
@@ -56,25 +57,31 @@ class Login extends Component {
   render() {
     const { buttDisabled, redirectSettings, redirectGame } = this.state;
     return (
-      <div>
-        {/* input do nome */ }
-        <Input
-          type="text"
-          placeholder="Name"
-          name="name"
-          onChange={ this.handleChange }
-          dataTest="input-player-name"
-          id="name"
-        />
-        {/* input do email */ }
-        <Input
-          type="email"
-          placeholder="E-mail"
-          name="email"
-          onChange={ this.handleChange }
-          dataTest="input-gravatar-email"
-          id="email"
-        />
+      <div className="loginContainer">
+        <h1 className="logoTitle">Trivia</h1>
+
+        <form className="loginForm">
+          <div className="innerForm">
+            {/* input do nome */ }
+            <Input
+              type="text"
+              placeholder="Name"
+              name="name"
+              onChange={ this.handleChange }
+              dataTest="input-player-name"
+              id="name"
+            />
+            {/* input do email */ }
+            <Input
+              type="email"
+              placeholder="E-mail"
+              name="email"
+              onChange={ this.handleChange }
+              dataTest="input-gravatar-email"
+              id="email"
+            />
+          </div>
+        </form>
         {/* botão Play */ }
         <Button
           onClick={ () => this.handleLoginGame() }
