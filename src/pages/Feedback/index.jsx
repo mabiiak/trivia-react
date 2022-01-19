@@ -1,10 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../../components';
+import { Header, Button } from '../../components';
 
 class Feedback extends React.Component {
-    const { props: { totalAssertions, totalScore, nameUser } } = this;
+  constructor() {
+    super();
+    this.handleRankingButton = this.handleRankingButton.bind(this);
+  }
+
+  handleRankingButton() {
+    const { history } = this.props;
+    history.push('/ranking');
+  }
+
+  render() {
+    const {
+      props: { totalAssertions, totalScore, nameUser },
+      handleRankingButton,
+    } = this;
     const assertions = 3;
     return (
       <div>
@@ -19,7 +33,7 @@ class Feedback extends React.Component {
         }
         <p data-testeid="feedback-total-question">
           De 5 questões você acertou
-          { ` &{assertions} ` }
+          { ` ${assertions} ` }
         </p>
         <p data-testid="feedback-total-score">
           Parabéns
@@ -27,6 +41,15 @@ class Feedback extends React.Component {
           ! Sua pontuação foi de:
           {` ${totalScore}`}
         </p>
+        <section>
+          <Button
+            className="notClicked"
+            onClick={ handleRankingButton }
+            dataTest="btn-ranking"
+            buttDisabled={ false }
+            label="Ranking"
+          />
+        </section>
       </div>
     );
   }
@@ -36,6 +59,7 @@ Feedback.propTypes = {
   totalAssertions: PropTypes.number.isRequired,
   totalScore: PropTypes.number.isRequired,
   nameUser: PropTypes.string.isRequired,
+  history: PropTypes.arrayOf(PropTypes.func).isRequired,
 };
 
 const mapStateToProps = (state) => ({
