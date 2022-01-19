@@ -97,9 +97,7 @@ class Login extends Component {
         <FcSettings
           className="settingsButton"
           onClick={ () => this.setState({ redirectSettings: true }) }
-          label="Configurações"
-          dataTest="btn-settings"
-          buttDisabled={ false }
+          data-testid="btn-settings"
         />
         {
           redirectSettings && <Redirect to="/settings" />

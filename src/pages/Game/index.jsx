@@ -31,7 +31,7 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    const MIL = 1000;
+    const TIME = 1000;
     const { handleQuestionsRedux } = this.props;
     handleQuestionsRedux().then(() => {
       const { questionList } = this.props;
@@ -41,7 +41,7 @@ class Game extends React.Component {
     });
     this.timerID = setInterval(
       () => this.tick(),
-      MIL,
+      TIME,
     );
   }
 
@@ -56,18 +56,19 @@ class Game extends React.Component {
     const diff = (questionList[questionIndex]);
     const correct = questionList[questionIndex].correct_answer;
 
-    const ACERTO = 10;
-    const DOIS = 2;
-    const TRES = 3;
+    const correctAnswer = 10;
+    const mediumDifficulty = 2;
+    const hardDifficulty = 3;
 
-    let currentDificulty = 1;
+    let currentDifficulty = 1;
 
     if (value === correct) {
-      if (diff === 'medium') currentDificulty = DOIS;
-      if (diff === 'hard') currentDificulty = TRES;
+      if (diff === 'medium') currentDifficulty = mediumDifficulty;
+      if (diff === 'hard') currentDifficulty = hardDifficulty;
 
       this.setState((prevState) => ({
-        score: prevState.score + ACERTO + (currentTime * currentDificulty) }), () => {
+        score:
+          prevState.score + correctAnswer + (currentTime * currentDifficulty) }), () => {
         const { score } = this.state;
         const { setScoreRedux } = this.props;
         localStorage.setItem('ranking', JSON.stringify({ score }));
