@@ -14,6 +14,7 @@ export const setLogin = (payload) => ({
 export const setScore = (payload) => ({
   type: SET_SCORE,
   score: payload.score,
+  assertions: payload.assertions,
 });
 
 const setToken = (token) => ({

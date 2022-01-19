@@ -1,8 +1,8 @@
 import { SET_LOGIN, SET_SCORE } from '../actions';
 
 const INITIAL_STATE = {
-  name: '',
-  assertions: '',
+  name: 'Anonymous',
+  assertions: 0,
   score: 0,
   email: '',
 };
@@ -19,6 +19,7 @@ function player(state = INITIAL_STATE, action) {
     return {
       ...state,
       score: action.score,
+      assertions: action.assertions,
     };
   default:
     return state;

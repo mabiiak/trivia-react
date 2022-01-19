@@ -1,41 +1,47 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Header } from '../../components';
 
 class Feedback extends React.Component {
-  render() {
-    const { totalScore, assertions, nameUser } = this.props;
+    const { props: { totalAssertions, totalScore, nameUser } } = this;
+    const assertions = 3;
     return (
       <div>
         <Header />
-        <div data-testid="feedback-text">
-          <p data-testeid="feedback-total-question">
-            De 5 questões você acertou
-            { ` &{assertions} ` }
-          </p>
-          <p data-testid="feedback-total-score">
-            Parabéns
-            { ` ${nameUser}` }
-            ! Sua pontuação foi de:
-            {` ${totalScore}`}
-          </p>
-        </div>
+        {
+          totalAssertions < assertions
+            ? (
+              <h2 data-testid="feedback-text">Could be better...</h2>
+            ) : (
+              <h2 data-testid="feedback-text">Well Done!</h2>
+            )
+        }
+        <p data-testeid="feedback-total-question">
+          De 5 questões você acertou
+          { ` &{assertions} ` }
+        </p>
+        <p data-testid="feedback-total-score">
+          Parabéns
+          { ` ${nameUser}` }
+          ! Sua pontuação foi de:
+          {` ${totalScore}`}
+        </p>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  nameUser: state.player.name,
-  totalScore: state.player.score,
-  assertions: state.player.assertions,
-});
-
 Feedback.propTypes = {
+  totalAssertions: PropTypes.number.isRequired,
   totalScore: PropTypes.number.isRequired,
-  assertions: PropTypes.number.isRequired,
   nameUser: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  totalAssertions: state.player.assertions,
+  nameUser: state.player.name,
+  totalScore: state.player.score,
+});
 
 export default connect(mapStateToProps, null)(Feedback);
