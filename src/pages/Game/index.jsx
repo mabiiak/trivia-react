@@ -21,6 +21,7 @@ class Game extends React.Component {
       currentTime: 30,
       display: 'nextButtonNotShown',
       score: 0,
+      assertions: 0,
     };
 
     this.renderAnswers = this.renderAnswers.bind(this);
@@ -52,7 +53,8 @@ class Game extends React.Component {
   }
 
   sumPoints(value) {
-    const { questionList, questionIndex, currentTime } = this.state;
+    const { questionList, questionIndex, currentTime, assertions } = this.state;
+    console.log(assertions);
     const diff = (questionList[questionIndex]);
     const correct = questionList[questionIndex].correct_answer;
 
@@ -68,7 +70,9 @@ class Game extends React.Component {
 
       this.setState((prevState) => ({
         score:
-          prevState.score + correctAnswer + (currentTime * currentDifficulty) }), () => {
+          prevState.score + correctAnswer + (currentTime * currentDifficulty),
+        assertions: prevState.assertions + 1,
+      }), () => {
         const { score } = this.state;
         const { setScoreRedux } = this.props;
         localStorage.setItem('ranking', JSON.stringify({ score }));
@@ -99,7 +103,6 @@ class Game extends React.Component {
         this.setState({ buttonDisabled: false, display: 'nextButtonNotShown' });
       });
     } else {
-      console.log('uarheurhaeuihruia');
       history.push('/feedback');
     }
   }
