@@ -2,7 +2,7 @@
 
 .header {
   width: 100%;
-  height: 120px;
+  height: 200px;
   background-color: saturate($primaryColor, 10);
   display: flex;
   flex-direction: column;
@@ -17,6 +17,7 @@
 
   & p {
     background-color: inherit;
+    font-size: 2em;
     margin-left: 10px;
     margin-right: 10px;
   }
@@ -24,14 +25,14 @@
 
 .logoTitleHeader {
   text-shadow: 0 5px $bgColor;
-  font-size: 5em;
+  font-size: 8em;
   background-color: inherit;
 }
 
 .avatar {
   border-radius: 50%;
   border: 1px solid darken($primaryColor, 25);
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   margin-left: 10px;
 }
