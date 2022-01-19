@@ -27,6 +27,7 @@ class Header extends React.Component {
 
   render() {
     const { state: { hash }, props: { returnName, returnScore } } = this;
+    console.log(returnScore);
 
     return (
       <header className="header">
@@ -41,7 +42,8 @@ class Header extends React.Component {
           <p data-testid="header-player-name">
             { returnName }
           </p>
-          <p data-testid="header-score">{`Score: ${returnScore}`}</p>
+          <p>Score: </p>
+          <p data-testid="header-score">{ returnScore }</p>
         </div>
       </header>
     );
@@ -57,7 +59,7 @@ const mapStateToProps = (state) => ({
 Header.propTypes = {
   returnName: PropTypes.string.isRequired,
   returnEmail: PropTypes.string.isRequired,
-  returnScore: PropTypes.string.isRequired,
+  returnScore: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

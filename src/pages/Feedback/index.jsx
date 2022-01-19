@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Header } from '../../components';
 
 class Feedback extends React.Component {
+  render() {
     const { props: { totalAssertions, totalScore, nameUser } } = this;
     const assertions = 3;
     return (
@@ -17,16 +18,18 @@ class Feedback extends React.Component {
               <h2 data-testid="feedback-text">Well Done!</h2>
             )
         }
-        <p data-testeid="feedback-total-question">
-          De 5 questões você acertou
-          { ` &{assertions} ` }
-        </p>
-        <p data-testid="feedback-total-score">
-          Parabéns
-          { ` ${nameUser}` }
-          ! Sua pontuação foi de:
-          {` ${totalScore}`}
-        </p>
+        <div>
+          <span>De 5 questões você acertou: </span>
+          <span data-testid="feedback-total-question">
+            { totalAssertions }
+          </span>
+        </div>
+        <span>
+          {`Parabéns ${nameUser} ! Sua pontuacao foi de: `}
+        </span>
+        <span data-testid="feedback-total-score">
+          { totalScore }
+        </span>
       </div>
     );
   }
