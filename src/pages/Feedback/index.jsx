@@ -1,9 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Header } from '../../components';
+import { Header, Button } from '../../components';
 
 class Feedback extends React.Component {
+  constructor() {
+    super();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    const { history } = this.props;
+    history.push('/');
+  }
+
   render() {
     const { props: { totalAssertions } } = this;
     console.log(totalAssertions);
@@ -11,6 +21,7 @@ class Feedback extends React.Component {
     return (
       <div>
         <Header />
+
         {
           totalAssertions < assertions
             ? (
@@ -19,6 +30,14 @@ class Feedback extends React.Component {
               <h2 data-testid="feedback-text">Well Done!</h2>
             )
         }
+        <Button
+          className="play-again"
+          type="button"
+          onClick={ this.onClick }
+          dataTest="btn-play-again"
+          buttDisabled={ false }
+          label="Play Again"
+        />
       </div>
     );
   }
@@ -26,6 +45,7 @@ class Feedback extends React.Component {
 
 Feedback.propTypes = {
   totalAssertions: PropTypes.number.isRequired,
+  history: PropTypes.arrayOf(PropTypes.func).isRequired,
 };
 
 const mapStateToProps = (state) => ({
