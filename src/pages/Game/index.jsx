@@ -7,6 +7,7 @@ import {
   Button,
   Timer,
 } from '../../components';
+import '../../sass/game.scss';
 
 class Game extends React.Component {
   constructor() {

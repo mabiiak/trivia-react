@@ -1,5 +1,6 @@
 @import '../sass/variables.scss';
 
+// Login Buttons
 .playButton {
   background-color: $primaryColor;
   border: none;
@@ -39,4 +40,30 @@
     width: 86px;
     height: 86px;
   }
+}
+
+// Game Buttons
+.nextButtonNotShown {
+  display: none;
+}
+
+.notClicked {
+  margin: 3px;
+  padding: 5px;
+}
+
+.correctAnswer:disabled {
+  background-color: rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
+  color: black;
+  margin: 3px;
+  padding: 5px;
+}
+
+.wrongAnswer:disabled {
+  background-color: red;
+  border: 3px solid red;
+  color: white;
+  margin: 3px;
+  padding: 5px;
 }
