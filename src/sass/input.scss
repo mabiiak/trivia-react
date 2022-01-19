@@ -1,0 +1,24 @@
+@import '../sass/variables.scss';
+
+.loginInput {
+  width: 90%;
+  height: 40%;
+  margin: 0.5em;
+  outline: none;
+  border: 2px solid $borderColor;
+  background-color: transparent;
+  color: $secondaryTextColor;
+  font-size: 2.5em;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: 700;
+  
+  &::placeholder {
+    color: $placeholderColor;
+    text-align: center;
+  }
+
+  &:active {
+    outline: none;
+  }
+}

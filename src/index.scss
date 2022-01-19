@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import './sass/variables.scss';
+
+* {
+  font-family: 'VT323';
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  background-color: $bgColor;
+  color: $textColor;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  // overflow: hidden;
+}

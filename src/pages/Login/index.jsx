@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { handleToken, setLogin } from '../redux/actions';
+import { FcSettings } from 'react-icons/fc';
+import { handleToken, setLogin } from '../../redux/actions';
+import '../../sass/login.scss';
+import {
+  Input,
+  Button,
+} from '../../components';
 
 class Login extends Component {
   constructor() {
@@ -56,38 +60,44 @@ class Login extends Component {
   render() {
     const { buttDisabled, redirectSettings, redirectGame } = this.state;
     return (
-      <div>
-        {/* input do nome */ }
-        <Input
-          type="text"
-          placeholder="Name"
-          name="name"
-          onChange={ this.handleChange }
-          dataTest="input-player-name"
-          id="name"
-        />
-        {/* input do email */ }
-        <Input
-          type="email"
-          placeholder="E-mail"
-          name="email"
-          onChange={ this.handleChange }
-          dataTest="input-gravatar-email"
-          id="email"
-        />
-        {/* botão Play */ }
-        <Button
-          onClick={ () => this.handleLoginGame() }
-          label="Play"
-          dataTest="btn-play"
-          buttDisabled={ buttDisabled }
-        />
-        {/* botão de configurações */}
-        <Button
+      <div className="loginContainer">
+        <h1 className="logoTitle">Trivia</h1>
+
+        <form className="loginForm">
+          <div className="innerForm">
+            {/* Name Input */ }
+            <Input
+              type="text"
+              placeholder="Name"
+              name="name"
+              onChange={ this.handleChange }
+              dataTest="input-player-name"
+              id="name"
+            />
+            {/* Email Input */ }
+            <Input
+              type="email"
+              placeholder="E-mail"
+              name="email"
+              onChange={ this.handleChange }
+              dataTest="input-gravatar-email"
+              id="email"
+            />
+            {/* Play Button */ }
+            <Button
+              className="playButton"
+              onClick={ () => this.handleLoginGame() }
+              label="Play"
+              dataTest="btn-play"
+              buttDisabled={ buttDisabled }
+            />
+          </div>
+        </form>
+        {/* Settings Button */}
+        <FcSettings
+          className="settingsButton"
           onClick={ () => this.setState({ redirectSettings: true }) }
-          label="Configurações"
-          dataTest="btn-settings"
-          buttDisabled={ false }
+          data-testid="btn-settings"
         />
         {
           redirectSettings && <Redirect to="/settings" />

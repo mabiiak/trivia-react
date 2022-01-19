@@ -1,0 +1,69 @@
+@import '../sass/variables.scss';
+
+// Login Buttons
+.playButton {
+  background-color: $primaryColor;
+  border: none;
+  border-radius: 5px;
+  height: 100px;
+  width: 90%;
+  font-size: 2em;
+  cursor: pointer;
+  transition: 0.4s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: darken($primaryColor, 20);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.settingsButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 128px;
+  height: 128px;
+  transition: transform 1s;
+  cursor: pointer;
+
+  &:hover {
+    transform: rotate(360deg) translateZ(0);
+  }
+}
+
+@media (max-width: 750px) {
+  .settingsButton {
+    width: 86px;
+    height: 86px;
+  }
+}
+
+// Game Buttons
+.nextButtonNotShown {
+  display: none;
+}
+
+.notClicked {
+  margin: 3px;
+  padding: 5px;
+}
+
+.correctAnswer:disabled {
+  background-color: rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
+  color: black;
+  margin: 3px;
+  padding: 5px;
+}
+
+.wrongAnswer:disabled {
+  background-color: red;
+  border: 3px solid red;
+  color: white;
+  margin: 3px;
+  padding: 5px;
+}
