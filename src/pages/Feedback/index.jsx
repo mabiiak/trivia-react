@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Header, Button } from '../../components';
 
 class Feedback extends React.Component {
-  constructor() {
-    super();
-    this.handleRankingButton = this.handleRankingButton.bind(this);
+  onClick() {
+    const { history } = this.props;
+    history.push('/');
   }
 
   handleRankingButton() {
@@ -17,12 +17,14 @@ class Feedback extends React.Component {
   render() {
     const {
       props: { totalAssertions, totalScore, nameUser },
-      handleRankingButton
+      handleRankingButton, onClick
     } = this;
     const assertions = 3;
+
     return (
       <div>
         <Header />
+
         {
           totalAssertions < assertions
             ? (
@@ -50,6 +52,14 @@ class Feedback extends React.Component {
             dataTest="btn-ranking"
             buttDisabled={ false }
             label="Ranking"
+          />
+          <Button
+            className="play-again"
+            type="button"
+            onClick={ this.onClick }
+            dataTest="btn-play-again"
+            buttDisabled={ false }
+            label="Play Again"
           />
         </section>
       </div>
