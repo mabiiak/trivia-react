@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header.css';
+// import './Header.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';

@@ -1,0 +1,42 @@
+@import '../sass/variables.scss';
+
+.playButton {
+  background-color: $primaryColor;
+  border: none;
+  border-radius: 5px;
+  height: 100px;
+  width: 90%;
+  font-size: 2em;
+  cursor: pointer;
+  transition: 0.4s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: darken($primaryColor, 20);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.settingsButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 128px;
+  height: 128px;
+  transition: transform 1s;
+  cursor: pointer;
+
+  &:hover {
+    transform: rotate(360deg) translateZ(0);
+  }
+}
+
+@media (max-width: 750px) {
+  .settingsButton {
+    width: 86px;
+    height: 86px;
+  }
+}

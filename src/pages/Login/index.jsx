@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { handleToken, setLogin } from '../redux/actions';
-import '../sass/login.scss';
+import { FcSettings } from 'react-icons/fc';
+import { handleToken, setLogin } from '../../redux/actions';
+import '../../sass/login.scss';
+import {
+  Input,
+  Button,
+} from '../../components';
 
 class Login extends Component {
   constructor() {
@@ -62,7 +65,7 @@ class Login extends Component {
 
         <form className="loginForm">
           <div className="innerForm">
-            {/* input do nome */ }
+            {/* Name Input */ }
             <Input
               type="text"
               placeholder="Name"
@@ -71,7 +74,7 @@ class Login extends Component {
               dataTest="input-player-name"
               id="name"
             />
-            {/* input do email */ }
+            {/* Email Input */ }
             <Input
               type="email"
               placeholder="E-mail"
@@ -80,17 +83,19 @@ class Login extends Component {
               dataTest="input-gravatar-email"
               id="email"
             />
+            {/* Play Button */ }
+            <Button
+              className="playButton"
+              onClick={ () => this.handleLoginGame() }
+              label="Play"
+              dataTest="btn-play"
+              buttDisabled={ buttDisabled }
+            />
           </div>
         </form>
-        {/* botão Play */ }
-        <Button
-          onClick={ () => this.handleLoginGame() }
-          label="Play"
-          dataTest="btn-play"
-          buttDisabled={ buttDisabled }
-        />
-        {/* botão de configurações */}
-        <Button
+        {/* Settings Button */}
+        <FcSettings
+          className="settingsButton"
           onClick={ () => this.setState({ redirectSettings: true }) }
           label="Configurações"
           dataTest="btn-settings"

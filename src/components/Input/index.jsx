@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../sass/input.scss';
+import '../../sass/input.scss';
 
 export default class Input extends Component {
   render() {

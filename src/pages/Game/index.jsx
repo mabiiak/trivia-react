@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropType from 'prop-types';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import { handleQuestions, setScore } from '../redux/actions';
-import Timer from '../components/Timer';
+import { handleQuestions, setScore } from '../../redux/actions';
+import {
+  Header,
+  Button,
+  Timer,
+} from '../../components';
 
 class Game extends React.Component {
   constructor() {
