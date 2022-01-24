@@ -5,7 +5,7 @@ export default class Timer extends Component {
   render() {
     const { currentTime } = this.props;
     return (
-      <div>
+      <div className="timer">
         {currentTime}
       </div>
     );

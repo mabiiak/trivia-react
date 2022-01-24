@@ -4,6 +4,13 @@ import { connect } from 'react-redux';
 import { Header, Button } from '../../components';
 
 class Feedback extends React.Component {
+  constructor() {
+    super();
+
+    this.onClick = this.onClick.bind(this);
+    this.handleRankingButton = this.handleRankingButton.bind(this);
+  }
+
   onClick() {
     const { history } = this.props;
     history.push('/');
@@ -17,7 +24,7 @@ class Feedback extends React.Component {
   render() {
     const {
       props: { totalAssertions, totalScore, nameUser },
-      handleRankingButton, onClick
+      handleRankingButton, onClick,
     } = this;
     const assertions = 3;
 
@@ -56,7 +63,7 @@ class Feedback extends React.Component {
           <Button
             className="play-again"
             type="button"
-            onClick={ this.onClick }
+            onClick={ onClick }
             dataTest="btn-play-again"
             buttDisabled={ false }
             label="Play Again"
