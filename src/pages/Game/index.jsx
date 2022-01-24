@@ -170,28 +170,38 @@ class Game extends React.Component {
     return (
       <div>
         <Header />
-        <section>
-          <div data-testid="question-category">
-            { questionList.length > 0
-            && `Categoria - ${questionList[questionIndex].category} ` }
+        <div className="gameContainer">
+          <div className="innerGameContainer">
+            <section className="questionContainer">
+              <div
+                className="categoryContainer"
+                data-testid="question-category"
+              >
+                { questionList.length > 0
+                && `Categoria - ${questionList[questionIndex].category} ` }
+              </div>
+              <div
+                className="innerQuestionContainer"
+                data-testid="question-text"
+              >
+                { questionList.length > 0 && questionList[questionIndex].question }
+              </div>
+            </section>
+            <section className="answerContainer" data-testid="answer-options">
+              { questionList.length > 0 && renderAnswers(questionIndex) }
+            </section>
           </div>
-          <div data-testid="question-text">
-            { questionList.length > 0 && questionList[questionIndex].question }
+          <div>
+            <Button
+              className={ display }
+              buttDisabled={ false }
+              label="Next"
+              onClick={ handleNext }
+              dataTest="btn-next"
+            />
           </div>
-        </section>
-        <section data-testid="answer-options">
-          { questionList.length > 0 && renderAnswers(questionIndex) }
-        </section>
-        <Timer currentTime={ currentTime } />
-        <div>
-          <Button
-            className={ display }
-            buttDisabled={ false }
-            label="Next"
-            onClick={ handleNext }
-            dataTest="btn-next"
-          />
         </div>
+        <Timer currentTime={ currentTime } />
       </div>
     );
   }
