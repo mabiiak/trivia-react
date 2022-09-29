@@ -78,6 +78,7 @@ Foi desenvolvido um jogo de perguntas e respostas baseado no jogo **Trivia** uti
   * Adicione uma descrição para o _Pull Request_ e clique no botão verde _"Create pull request"_
   * **Não se preocupe em preencher mais nada por enquanto!**
   * Volte até a [página de _Pull Requests_ do repositório](https://github.com/mabiiak/trivia-react/pulls) e confira que o seu _Pull Request_ está criado
+</details>
 
 <details>
   <summary>
