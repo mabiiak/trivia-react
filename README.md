@@ -85,6 +85,7 @@ Foi desenvolvido um jogo de perguntas e respostas baseado no jogo **Trivia** uti
     <h3>
       API de Trivia
     </h3>
+  </summary>
 
 A [API do Trivia](https://opentdb.com/api_config.php) é bem simples. Temos 2 endpoints que vamos precisar utilizar para esse exercício.
 
@@ -172,6 +173,8 @@ O token expira em 6 horas e te retornará um `response_code: 3` caso esteja expi
     <h3>
       Gravatar
     </h3>
+  </summary>
+
 
 O Gravatar é um serviço que permite deixar o avatar global a partir do email cadastrado, ele mostra sua foto cadastrada em qualquer site vinculado. Na tela de **Inicio**, a pessoa que joga pode colocar um e-mail que deve fazer uma consulta a API do [Gravatar](https://br.gravatar.com/site/implement/images/).
 
