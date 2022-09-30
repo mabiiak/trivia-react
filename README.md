@@ -34,8 +34,9 @@ Foi desenvolvido um jogo de perguntas e respostas baseado no jogo **Trivia** uti
 <details>
   <summary>
     <h3>
-      Antes de começar a desenvolver</summary><br />
+      Antes de começar a desenvolver
     </h3>
+    </summary>
 
 1. Clone o repositório
   * `git clone git@github.com:mabiiak/trivia-react.git`
